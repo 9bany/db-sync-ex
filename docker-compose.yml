@@ -1,0 +1,38 @@
+version: '3.5'
+
+services:
+  postgres_has_data:
+    container_name: postgres_has_data_container
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: secret
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "35432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+  postgres_need_to_sync:
+    container_name: postgres_need_to_sync_container
+    image: postgres
+    environment:
+      POSTGRES_USER: root 
+      POSTGRES_PASSWORD: secret
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "35433:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+    postgres:
+    pgadmin:
